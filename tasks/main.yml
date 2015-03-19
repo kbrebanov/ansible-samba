@@ -24,17 +24,15 @@
   when: smb_conf.rc == 0
   tags: samba
 
-- name: Provision domain controller
-  command: samba-tool domain provision \
-           --realm={{ samba_realm }} \
-           --domain={{ samba_domain }} \
-           --adminpass={{ samba_admin_pass }} \
-           --dns-backend=SAMBA_INTERNAL \
-           --option='dns forwarder'={{ samba_dns_forwarder }} \
-           --quiet \
-           --server-role=dc \
-           --use-xattrs=yes \
-           --use-rfc2307
-  args:
-    creates: /var/lib/samba/private/sam.ldb
+- include: provision.yml
+  when: samba_create_domain
+  tags: samba
+
+- include: join.yml
+  when: not samba_create_domain
+  tags: samba
+
+- name: Ensure Samba services are started and enabled on boot
+  service: name={{ item }} state=started enabled=yes
+  with_items: samba_services
   tags: samba

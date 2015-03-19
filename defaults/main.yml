@@ -1,7 +1,13 @@
 ---
 # defaults file for samba
 
-samba_realm: REALM.EXAMPLE.COM
-samba_domain: REALM
+samba_create_domain: yes
+
+samba_realm: realm.example.com
+samba_domain: realm
+samba_netbios_name: dc
 samba_admin_pass: Passw0rd
-samba_dns_forwarder: 127.0.0.1
+samba_dns_forwarder: 8.8.8.8
+
+samba_kerberos_dns_lookup_realm: "false"
+samba_kerberos_dns_lookup_kdc: "true"

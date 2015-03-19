@@ -4,3 +4,7 @@
 samba_packages:
   - samba
   - smbclient
+samba_services:
+  - nmbd
+  - smbd
+  - samba-ad-dc
