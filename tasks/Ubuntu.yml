@@ -1,0 +1,7 @@
+---
+# tasks file for samba (Ubuntu specific)
+
+- name: Install Samba packages
+  apt: name={{ item }} state=present update_cache=yes
+  with_items: samba_packages
+  tags: samba

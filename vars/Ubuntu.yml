@@ -1,0 +1,6 @@
+---
+# vars file for samba (Ubuntu specific)
+
+samba_packages:
+  - samba
+  - smbclient

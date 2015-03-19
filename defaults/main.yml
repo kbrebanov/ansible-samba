@@ -1,2 +1,7 @@
 ---
 # defaults file for samba
+
+samba_realm: REALM.EXAMPLE.COM
+samba_domain: REALM
+samba_admin_pass: Passw0rd
+samba_dns_forwarder: 127.0.0.1

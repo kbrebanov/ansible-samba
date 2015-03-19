@@ -1,2 +1,40 @@
 ---
 # tasks file for samba
+
+- name: Include distribution specific variables
+  include_vars: "{{ ansible_distribution }}.yml"
+  tags: samba
+
+- include: CentOS.yml
+  when: ansible_distribution == "CentOS"
+  tags: samba
+
+- include: Ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
+  tags: samba
+
+- name: Check for sample configuration file
+  command: grep 'Sample configuration file' /etc/samba/smb.conf
+  ignore_errors: yes
+  register: smb_conf
+  tags: samba
+
+- name: Remove sample configuration file
+  file: path=/etc/samba/smb.conf state=absent
+  when: smb_conf.rc == 0
+  tags: samba
+
+- name: Provision domain controller
+  command: samba-tool domain provision \
+           --realm={{ samba_realm }} \
+           --domain={{ samba_domain }} \
+           --adminpass={{ samba_admin_pass }} \
+           --dns-backend=SAMBA_INTERNAL \
+           --option='dns forwarder'={{ samba_dns_forwarder }} \
+           --quiet \
+           --server-role=dc \
+           --use-xattrs=yes \
+           --use-rfc2307
+  args:
+    creates: /var/lib/samba/private/sam.ldb
+  tags: samba
