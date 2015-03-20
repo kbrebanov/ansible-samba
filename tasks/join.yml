@@ -1,15 +1,6 @@
 ---
 # tasks file for samba (join existing domain)
 
-- name: Create Kerberos configuration file
-  template: >
-    src=krb5.conf.j2
-    dest=/etc/krb5.conf
-    owner=root
-    group=root
-    mode=0644
-  tags: samba
-
 - name: Join existing domain as a Domain Controller
   command: samba-tool domain join {{ samba_realm }} DC \
            --username=administrator \
