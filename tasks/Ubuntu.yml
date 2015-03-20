@@ -5,3 +5,7 @@
   apt: name={{ item }} state=present update_cache=yes
   with_items: samba_packages
   tags: samba
+
+- name: Ensure smbd service is disabled
+  service: name=smbd state=stopped enabled=no
+  tags: samba

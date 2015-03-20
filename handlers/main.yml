@@ -2,6 +2,5 @@
 # handlers file for samba
 
 - name: restart samba
-  service: name={{ item }} state=restarted
-  with_items: samba_services
+  service: name={{ samba_service }} state=restarted
   tags: samba

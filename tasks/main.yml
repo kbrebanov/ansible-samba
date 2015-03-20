@@ -32,7 +32,6 @@
   when: not samba_create_domain
   tags: samba
 
-- name: Ensure Samba services are started and enabled on boot
-  service: name={{ item }} state=started enabled=yes
-  with_items: samba_services
+- name: Ensure Samba service is started and enabled on boot
+  service: name={{ samba_service }} state=started enabled=yes
   tags: samba
