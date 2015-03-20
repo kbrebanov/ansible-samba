@@ -16,6 +16,7 @@
 - name: Check for sample configuration file
   command: grep 'Sample configuration file' /etc/samba/smb.conf
   ignore_errors: yes
+  changed_when: False
   register: smb_conf
   tags: samba
 
